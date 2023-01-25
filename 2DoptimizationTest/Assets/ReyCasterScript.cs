@@ -5,7 +5,7 @@ using UnityEngine;
 public class ReyCasterScript : MonoBehaviour
 {
     // all angles are in degrees
-    public float angle = 0;
+    public float angle;
     public float fieldOfView = 70;
     public int numOfRays = 10;
     public float depthOfView = 10;
@@ -21,7 +21,6 @@ public class ReyCasterScript : MonoBehaviour
     void Update()
     {
         Vector2[] directions = new Vector2[numOfRays];
-        //float startAngle = transform.rotation.z*Mathf.Rad2Deg - fieldOfView / 2;
         float startAngle = angle - fieldOfView / 2;
 
         float currAngle;
