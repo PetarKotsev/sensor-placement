@@ -101,8 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   fieldOfView: 70
-  numOfRays: 26
-  depthOfView: 10
+  numOfRays: 100
+  depthOfView: 5
   area: 0
 --- !u!120 &3790220524198961756
 LineRenderer:
