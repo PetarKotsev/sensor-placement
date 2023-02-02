@@ -64,7 +64,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         {
             RepositionAndCheckAngles();
         }
-        if (updateCounter == numOfIterations)
+        else
         {
             areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage(maxPositions, maxAngles);
             updateCounter++;
@@ -113,7 +113,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                 maxAreas = (float[])currMaxAreas.Clone();
 
                 Debug.Log("Updated: " + maxAreaSum);
-                for (int i = 0; i < numberOfCameras; i++) Debug.Log("Area[" + i + "]: " + currMaxAreas[i]);
+                for (int i = 0; i < numberOfCameras; i++) Debug.Log("Area[" + i + "]: ang(" + maxAngles[i]+ "), pos(" + maxPositions[i].x + ", " + maxPositions[i].y + ", " + maxPositions[i].x + ") " + "->" + maxAreas[i]);
             }
 
             for (int i = 0; i < numberOfCameras; i++)
