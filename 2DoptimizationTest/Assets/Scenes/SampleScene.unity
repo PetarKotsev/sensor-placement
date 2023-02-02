@@ -336,6 +336,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2031452625}
     - target: {fileID: 4876749756141358924, guid: 73bf87861766f0146b5f1972db2647e0, type: 3}
+      propertyPath: numOfIterations
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876749756141358924, guid: 73bf87861766f0146b5f1972db2647e0, type: 3}
       propertyPath: areaCoveredTextField
       value: 
       objectReference: {fileID: 1219476183}
