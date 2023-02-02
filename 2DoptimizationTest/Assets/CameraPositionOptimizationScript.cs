@@ -67,7 +67,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         else
         {
             areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage(maxPositions, maxAngles);
-            updateCounter++;
+            updateCounter = 0;
         }
     }
 
