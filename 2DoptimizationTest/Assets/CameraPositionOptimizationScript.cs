@@ -84,7 +84,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                 float newAngle = newCameraArray[j].GetComponent<ReyCasterScript>().angle + angleDelta;
                 PositionCamera(newCameraArray[j], newCameraArray[j].transform.position, newAngle);
                 // calculate area
-                float area = newCameraArray[j].GetComponent<ReyCasterScript>().area;
+                float area = newCameraArray[j].GetComponent<ReyCasterScript>().updateArea();
                 areaSum += area;
 
                 if (area > currMaxAreas[j])
@@ -158,7 +158,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         
         for (int i = 0; i < numberOfCameras; i++)
         {
-            areaSum += newCameraArray[i].GetComponent<ReyCasterScript>().area;
+            areaSum += newCameraArray[i].GetComponent<ReyCasterScript>().updateArea();
         }
 
         return areaSum;
@@ -171,7 +171,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         for (int j = 0; j < numberOfCameras; j++)
         {
             PositionCamera(newCameraArray[j],positions[j], angles[j]);
-            areaSum += newCameraArray[j].GetComponent<ReyCasterScript>().area;
+            areaSum += newCameraArray[j].GetComponent<ReyCasterScript>().updateArea();
         }
 
         return areaSum;
