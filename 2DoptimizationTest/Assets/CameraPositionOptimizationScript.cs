@@ -41,13 +41,10 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         maxPositions = new Vector3[numberOfCameras];
         r = houseObject.GetComponent<SpriteRenderer>().bounds;
 
-
         for (int i = 0; i < numberOfCameras; i++)
         {
             // make new camera
             newCameraArray[i] = makeCamera();
-            // randomly position camera
-            currPositions[i] = randomlyPositionCamera(newCameraArray[i], r);
         }
     }
 
@@ -63,6 +60,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         if (updateCounter < numOfIterations)
         {
             RepositionAndCheckAngles();
+            
         }
         //if (updateCounter == numOfIterations)
         else
@@ -91,7 +89,6 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                 {
                     currMaxAreas[j] = area;
                     currMaxAngles[j] = newAngle;
-                    maxPositions[j] = newCameraArray[j].transform.position;
                 }
             }
 
@@ -120,6 +117,10 @@ public class CameraPositionOptimizationScript : MonoBehaviour
 
             for (int i = 0; i < numberOfCameras; i++)
             {
+                // Rest angles and areas
+                currMaxAngles[i] = 0;
+                currMaxAreas[i] = 0;
+                // randomly position camera
                 currPositions[i] = randomlyPositionCamera(newCameraArray[i], r);
             }
 
