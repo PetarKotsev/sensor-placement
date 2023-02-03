@@ -64,10 +64,10 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         {
             RepositionAndCheckAngles();
         }
-        else
+        if (updateCounter == numOfIterations)
         {
             areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage(maxPositions, maxAngles);
-            updateCounter = 0;
+            updateCounter++;
         }
     }
 
@@ -129,7 +129,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
     {
         var x = Random.Range(r.center.x - r.extents.x, r.center.x + r.extents.x);
         var y = Random.Range(r.center.y - r.extents.y, r.center.y + r.extents.y);
-        var rot = Random.Range(-180f, 180f);
+        var rot = 0; // Random.Range(-180f, 180f);
 
         Vector3 position = new Vector3(x, y, -4f);
 
