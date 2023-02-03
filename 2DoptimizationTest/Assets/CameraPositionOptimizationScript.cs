@@ -64,10 +64,11 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         {
             RepositionAndCheckAngles();
         }
-        if (updateCounter == numOfIterations)
+        //if (updateCounter == numOfIterations)
+        else
         {
             areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage(maxPositions, maxAngles);
-            updateCounter++;
+            //updateCounter++;
         }
     }
 
@@ -90,6 +91,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                 {
                     currMaxAreas[j] = area;
                     currMaxAngles[j] = newAngle;
+                    maxPositions[j] = newCameraArray[j].transform.position;
                 }
             }
 
@@ -118,7 +120,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
 
             for (int i = 0; i < numberOfCameras; i++)
             {
-                randomlyPositionCamera(newCameraArray[i], r);
+                currPositions[i] = randomlyPositionCamera(newCameraArray[i], r);
             }
 
             updateCounter++;
