@@ -52,7 +52,11 @@ public class ReyCasterScript : MonoBehaviour
                 }
                 if (lastVectorEndPoint.magnitude > 0)
                 {
-                    Vector3 V = Vector3.Cross(transform.position - (Vector3)endPoints[i], transform.position - (Vector3)lastVectorEndPoint);
+                    Vector3 v1 = transform.position - (Vector3)endPoints[i];
+                    v1.z = 0;
+                    Vector3 v2 = transform.position - (Vector3)lastVectorEndPoint;
+                    v2.z = 0;
+                    Vector3 V = Vector3.Cross(v1, v2);
                     area += V.magnitude / 2.0f;
                 }
                 Debug.DrawLine(transform.position, endPoints[i]);
@@ -62,5 +66,18 @@ public class ReyCasterScript : MonoBehaviour
 
         return area;
     }
-    
+
+    public void printAreas ()
+    {
+        for (int i = 1; i < endPoints.Length; i++)
+        {
+            Vector3 v1 = transform.position - (Vector3)endPoints[i];
+            v1.z = 0;
+            Vector3 v2 = transform.position - (Vector3)endPoints[i - 1];
+            v2.z = 0;
+            Vector3 V = Vector3.Cross(v1,v2);
+            Debug.Log("Area[" + i + "} =" + V.magnitude / 2.0f + "end1: " + v1 + " end2: " + v2);
+        }
+
+    }
 }

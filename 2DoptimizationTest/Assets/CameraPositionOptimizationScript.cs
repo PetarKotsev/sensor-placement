@@ -10,13 +10,13 @@ public class CameraPositionOptimizationScript : MonoBehaviour
     public Text areaCoveredTextField;
     private Bounds r;
 
-    public int numberOfCameras = 5;
+    public int numberOfCameras = 1;
 
     private GameObject[] newCameraArray;
 
     // for angle step
-    private float[] currMaxAngles = { 0, 0, 0, 0, 0 };
-    private float[] currMaxAreas = { 0, 0, 0, 0, 0 };
+    private float[] currMaxAngles;
+    private float[] currMaxAreas;
     private Vector3[] currPositions;
     private int angleCounter = 0;
     private int angleDelta = 10;
@@ -27,7 +27,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
     public int numOfIterations = 90;
 
     // best results
-    public float[] maxAngles = { 0, 0, 0, 0, 0 };
+    public float[] maxAngles;
     public Vector3[] maxPositions;
     public float maxAreaSum = 0;
     public float[] maxAreas;
@@ -39,12 +39,22 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         newCameraArray = new GameObject[numberOfCameras];
         currPositions = new Vector3[numberOfCameras];
         maxPositions = new Vector3[numberOfCameras];
+
+        currMaxAngles = new float[numberOfCameras];
+        currMaxAreas = new float[numberOfCameras];
+        maxAngles = new float[numberOfCameras];
         r = houseObject.GetComponent<SpriteRenderer>().bounds;
 
         for (int i = 0; i < numberOfCameras; i++)
         {
+            // Rest angles and areas
+            currMaxAngles[i] = 0;
+            currMaxAreas[i] = 0;
+            maxAngles[i] = 0;
             // make new camera
             newCameraArray[i] = makeCamera();
+            // randomly position camera
+            currPositions[i] = randomlyPositionCamera(newCameraArray[i], r);
         }
     }
 
@@ -60,17 +70,19 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         if (updateCounter < numOfIterations)
         {
             RepositionAndCheckAngles();
-            
+
         }
-        //if (updateCounter == numOfIterations)
+        else if (updateCounter == 0)
+        {
+            // for debugging perposes
+        }
         else
         {
             areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage(maxPositions, maxAngles);
-            //updateCounter++;
         }
     }
 
-    public void RepositionAndCheckAngles ()
+    public void RepositionAndCheckAngles()
     {
         // angle optimization step
         if (angleCounter < numOfAngles)
@@ -90,9 +102,10 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                     currMaxAreas[j] = area;
                     currMaxAngles[j] = newAngle;
                 }
+                //Debug.Log("Camera[" + j + "] Angle: " + newAngle + " Area: " + areaSum);
             }
 
-            areaCoveredTextField.text = "Area covered: " + areaSum;
+            //areaCoveredTextField.text = "Area covered: " + areaSum;
             angleCounter++;
         }
         // evaluation and repositioning
@@ -102,8 +115,6 @@ public class CameraPositionOptimizationScript : MonoBehaviour
 
             float currMaxArea = evalueateCameraArrayCoverage(currPositions, currMaxAngles);
 
-            areaCoveredTextField.text = "Area covered: " + currMaxArea;
-
             if (currMaxArea > maxAreaSum)
             {
                 maxAreaSum = currMaxArea;
@@ -112,8 +123,10 @@ public class CameraPositionOptimizationScript : MonoBehaviour
                 maxAreas = (float[])currMaxAreas.Clone();
 
                 Debug.Log("Updated: " + maxAreaSum);
-                for (int i = 0; i < numberOfCameras; i++) Debug.Log("Area[" + i + "]: ang(" + maxAngles[i]+ "), pos(" + maxPositions[i].x + ", " + maxPositions[i].y + ", " + maxPositions[i].x + ") " + "->" + maxAreas[i]);
+                for (int i = 0; i < numberOfCameras; i++) Debug.Log("Area[" + i + "]: ang(" + maxAngles[i] + "), pos(" + maxPositions[i].x + ", " + maxPositions[i].y + ", " + maxPositions[i].x + ") " + "->" + maxAreas[i]);
             }
+
+            areaCoveredTextField.text = "Max area: " + maxAreaSum;
 
             for (int i = 0; i < numberOfCameras; i++)
             {
@@ -142,7 +155,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         return position;
     }
 
-    public void PositionCamera (GameObject camera, Vector3 position, float angle)
+    public void PositionCamera(GameObject camera, Vector3 position, float angle)
     {
         camera.transform.position = position;
         camera.GetComponent<ReyCasterScript>().angle = angle;
@@ -156,7 +169,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
     public float evalueateCameraArrayCoverage()
     {
         float areaSum = 0;
-        
+
         for (int i = 0; i < numberOfCameras; i++)
         {
             areaSum += newCameraArray[i].GetComponent<ReyCasterScript>().updateArea();
@@ -171,7 +184,7 @@ public class CameraPositionOptimizationScript : MonoBehaviour
 
         for (int j = 0; j < numberOfCameras; j++)
         {
-            PositionCamera(newCameraArray[j],positions[j], angles[j]);
+            PositionCamera(newCameraArray[j], positions[j], angles[j]);
             areaSum += newCameraArray[j].GetComponent<ReyCasterScript>().updateArea();
         }
 
@@ -187,5 +200,28 @@ public class CameraPositionOptimizationScript : MonoBehaviour
         Gizmos.matrix = Matrix4x4.identity;
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(bounds.center, bounds.extents * 2);
+    }
+
+    [ContextMenu("Move angle for all")]
+    public void moveAngle()
+    {
+        float areaSum = 0;
+        for (int j = 0; j < numberOfCameras; j++)
+        {
+
+            float newAngle = newCameraArray[j].GetComponent<ReyCasterScript>().angle + angleDelta;
+            PositionCamera(newCameraArray[j], newCameraArray[j].transform.position, newAngle);
+            // calculate area
+            float area = newCameraArray[j].GetComponent<ReyCasterScript>().updateArea();
+            areaSum += area;
+
+            if (area > currMaxAreas[j])
+            {
+                currMaxAreas[j] = area;
+                currMaxAngles[j] = newAngle;
+            }
+            Debug.Log("Camera[" + j + "] Angle: " + newAngle + " Area: " + areaSum);
+            //newCameraArray[j].GetComponentInParent<ReyCasterScript>().printAreas();
+        }
     }
 }
