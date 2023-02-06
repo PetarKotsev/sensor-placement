@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3790220524198961757}
   - component: {fileID: 3790220524198961755}
   - component: {fileID: 3790220524198961756}
-  - component: {fileID: 3790220524198961754}
   m_Layer: 0
   m_Name: Camera Object
   m_TagString: Untagged
@@ -101,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   fieldOfView: 70
-  numOfRays: 26
-  depthOfView: 10
+  numOfRays: 100
+  depthOfView: 5
   area: 0
 --- !u!120 &3790220524198961756
 LineRenderer:
@@ -203,17 +202,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &3790220524198961754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3790220524198961759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d6447be5ebea447a8fea9e1577d4f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  translationStepSize: 5
-  angleStepSize: 30
