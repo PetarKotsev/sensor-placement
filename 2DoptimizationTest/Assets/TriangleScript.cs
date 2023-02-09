@@ -38,10 +38,10 @@ public class TriangleScript : MonoBehaviour
         for (int i = 0; i < numberOfPoints; i++)
         {
             vertices[i] = (Vector3)endPoints[i];
-            vertices[i].z = -4;
+            //vertices[i].z = ;
 
-            vertices2D[0] = endPoints[i];
-            uv[0] = endPoints[i];
+            vertices2D[i] = endPoints[i];
+            uv[i] = endPoints[i];
         }
 
         for (int i = 0, j = 1; i < numberOfTriangles*3; i += 3, j++)
