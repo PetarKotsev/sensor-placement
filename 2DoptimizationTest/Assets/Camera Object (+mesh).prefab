@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 1442063407410641212}
   - component: {fileID: 4667175067206926707}
   - component: {fileID: 4507221450931785453}
-  - component: {fileID: -3238772363398745951}
+  - component: {fileID: 8289276538614644771}
   m_Layer: 0
-  m_Name: Camera Object
+  m_Name: Camera Object (+mesh)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,11 +187,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 30.111534, y: -3.5757446}
-      - {x: 28.321674, y: -4.8761544}
-      - {x: 29.005339, y: -6.980262}
-      - {x: 31.21773, y: -6.980262}
-      - {x: 31.901394, y: -4.8761544}
+    - []
 --- !u!33 &4507221450931785453
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -200,7 +196,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3790220524198961759}
   m_Mesh: {fileID: 0}
---- !u!114 &-3238772363398745951
+--- !u!114 &8289276538614644771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,11 +205,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3790220524198961759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d63c086c27e2144b0f43a85b16aba6, type: 3}
+  m_Script: {fileID: 11500000, guid: ea1c93215946faf4db9cfb4ab08d1535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
   fieldOfView: 70
-  numOfRays: 10
+  numOfRays: 100
   depthOfView: 5
   area: 0
+  endPoints: []
+  vertices: []
+  vertices2D: []
