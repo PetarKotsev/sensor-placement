@@ -23,6 +23,8 @@ public class ViewCasterScript : MonoBehaviour
     private int[] triangles;
     private int numberOfTriangles;
 
+    private bool isMeshDrawn = false;
+
     void Start()
     {
         endPoints = new Vector2[numOfRays];
@@ -45,11 +47,15 @@ public class ViewCasterScript : MonoBehaviour
 
     void Update()
     {
-        area = updateArea();
+        //area = updateArea();
     }
 
     public float updateArea ()
     {
+        if (isMeshDrawn)
+        {
+            return area;
+        }
         directions = new Vector2[numOfRays];
         startAngle = angle - fieldOfView / 2;
         lastVectorEndPoint = new Vector2(0, 0);
@@ -79,7 +85,7 @@ public class ViewCasterScript : MonoBehaviour
                     Vector3 V = Vector3.Cross(v1, v2);
                     area += V.magnitude / 2.0f;
                 }
-                //Debug.DrawLine(transform.position, endPoints[i]);
+                Debug.DrawLine(transform.position, endPoints[i]);
                 //Debug.Log("pos: (x:" + transform.position.x + ", y:" + transform.position.y + ", z:" + transform.position.z + ")");
                 //Debug.Log("endPoint:[" + i + "] (x:" + endPoints[i].x + ", y:" + endPoints[i].y + ")");
                 //Debug.Log("diff :[" + i + "] (x:" + (endPoints[i].x - transform.position.x) + ", y:" + (endPoints[i].y - transform.position.y) + ")");
@@ -87,7 +93,6 @@ public class ViewCasterScript : MonoBehaviour
                 lastVectorEndPoint = endPoints[i];
             }
         }
-        drawMesh();
         return area;
     }
 
@@ -115,11 +120,18 @@ public class ViewCasterScript : MonoBehaviour
             triangles[i + 2] = j + 1;
         }
 
-        mesh.vertices = vertices;
-        mesh.uv = uv;
-        mesh.triangles = triangles;
+        mesh.vertices = (Vector3[]) vertices.Clone();
+        mesh.uv = (Vector2[]) uv.Clone();
+        mesh.triangles = (int[]) triangles.Clone();
 
-        GetComponent<PolygonCollider2D>().points = vertices2D;
+        GetComponent<PolygonCollider2D>().points = (Vector2[]) vertices2D.Clone();
+
+        isMeshDrawn = true;
+    }
+
+    public void removeMesh ()
+    {
+        mesh.Clear();
     }
 
     public void printAreas ()
