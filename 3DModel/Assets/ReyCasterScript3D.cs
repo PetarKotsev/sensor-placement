@@ -48,7 +48,6 @@ public class ReyCasterScript3D : MonoBehaviour
 
             if (Physics.Raycast(transform.position, directions[i], out hit, Mathf.Infinity, layerMask))
             {
-                Debug.Log("yo");
                 endPoints[i] = hit.point;
                 if ((transform.position - endPoints[i]).magnitude > depthOfView)
                 {
