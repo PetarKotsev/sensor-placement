@@ -25,6 +25,8 @@ public class ViewCasterScript : MonoBehaviour
 
     private bool isMeshDrawn = false;
 
+    private int layerMask = 1 << 7;
+
     void Start()
     {
         endPoints = new Vector2[numOfRays];
@@ -68,7 +70,7 @@ public class ViewCasterScript : MonoBehaviour
             directions[i] = new Vector2(Mathf.Cos(currAngle), Mathf.Sin(currAngle));
             directions[i] = directions[i].normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directions[i]);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directions[i], Mathf.Infinity, layerMask);
             if (hit.collider)
             {
                 endPoints[i] = hit.point;
