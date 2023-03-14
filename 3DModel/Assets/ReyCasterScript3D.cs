@@ -45,10 +45,6 @@ public class ReyCasterScript3D : MonoBehaviour
             directions[i] = new Vector3(Mathf.Cos(currAngle), Mathf.Sin(currAngle), 0);
 
             RaycastHit hit;
-            //Debug.Log("> " + transform.position.x + " " + transform.position.y + " " + transform.position.z);
-            //Debug.Log("> " + directions[i].x + " " + directions[i].y + " " + directions[i].z);
-            //Debug.DrawRay(transform.position, directions[i]);
-            //Debug.Log(Physics.Raycast(transform.position, directions[i], out hit, Mathf.Infinity, layerMask));
 
             if (Physics.Raycast(transform.position, directions[i], out hit, Mathf.Infinity, layerMask))
             {
@@ -67,7 +63,7 @@ public class ReyCasterScript3D : MonoBehaviour
                     Vector3 V = Vector3.Cross(v1, v2);
                     area += V.magnitude / 2.0f;
                 }
-                Debug.Log("> " + endPoints[i].x + " " + endPoints[i].y + " " + endPoints[i].z);
+                //Debug.Log("> " + endPoints[i].x + " " + endPoints[i].y + " " + endPoints[i].z);
                 Debug.DrawLine(transform.position, endPoints[i]);
                 lastVectorEndPoint = endPoints[i];
             }
