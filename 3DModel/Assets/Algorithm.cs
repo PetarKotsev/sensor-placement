@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Algorithm: MonoBehaviour, AlgorithmInterface
+public abstract class Algorithm: MonoBehaviour
 {
     // for position step
     public int updateCounter = 0;

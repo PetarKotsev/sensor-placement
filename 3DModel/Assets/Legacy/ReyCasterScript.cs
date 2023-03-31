@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReyCasterScript : MonoBehaviour
+public class ReyCasterScript : CameraSensor
 {
     // all angles are in degrees
-    public float angle;
     public float fieldOfView = 70;
     public int numOfRays = 10;
     public float depthOfView = 10;
     private LineRenderer lr;
-    public float area;
 
     private Vector2 lastVectorEndPoint;
     private Vector2[] endPoints;
@@ -25,15 +23,15 @@ public class ReyCasterScript : MonoBehaviour
 
     void Update()
     {
-        area = updateArea();
+        value = updateArea();
     }
 
-    public float updateArea ()
+    public override float updateArea ()
     {
         directions = new Vector2[numOfRays];
         startAngle = angle - fieldOfView / 2;
         lastVectorEndPoint = new Vector2(0, 0);
-        area = 0;
+        value = 0;
 
         float currAngle;
         for (int i = 0; i < numOfRays; i++)
@@ -57,17 +55,17 @@ public class ReyCasterScript : MonoBehaviour
                     Vector3 v2 = transform.position - (Vector3)lastVectorEndPoint;
                     v2.z = 0;
                     Vector3 V = Vector3.Cross(v1, v2);
-                    area += V.magnitude / 2.0f;
+                    value += V.magnitude / 2.0f;
                 }
                 Debug.DrawLine(transform.position, endPoints[i]);
                 lastVectorEndPoint = endPoints[i];
             }
         }
 
-        return area;
+        return value;
     }
 
-    public void printAreas ()
+    public override void printAreas ()
     {
         for (int i = 1; i < endPoints.Length; i++)
         {

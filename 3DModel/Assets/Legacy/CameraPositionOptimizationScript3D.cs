@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraPositionOptimizationScript3D : MonoBehaviour
+public class CameraPositionOptimizationScript3D : Algorithm
 {
     public GameObject cameraObject;
     public GameObject houseObject;
@@ -22,10 +22,6 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
     private int angleDelta = 10;
     private int numOfAngles = 36;
 
-    // for position step
-    public int updateCounter = 0;
-    public int numOfIterations = 90;
-
     // best results
     public float[] maxAngles;
     public Vector3[] maxPositions;
@@ -34,8 +30,12 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
 
 
 
-    void Start()
+    public override void Start()
     {
+        // for position step
+        updateCounter = 0;
+        numOfIterations = 90;
+
         newCameraArray = new GameObject[numberOfCameras];
         currPositions = new Vector3[numberOfCameras];
         maxPositions = new Vector3[numberOfCameras];
@@ -59,13 +59,13 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         // Optimization
         OptimizationStep();
     }
 
-    public void OptimizationStep()
+    public override void OptimizationStep()
     {
         if (updateCounter < numOfIterations)
         {
@@ -91,10 +91,10 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
             for (int j = 0; j < numberOfCameras; j++)
             {
 
-                float newAngle = newCameraArray[j].GetComponent<ReyCasterScript3D>().angle + angleDelta;
+                float newAngle = newCameraArray[j].GetComponent<CameraSensor>().angle + angleDelta;
                 PositionCamera(newCameraArray[j], newCameraArray[j].transform.position, newAngle);
                 // calculate area
-                float area = newCameraArray[j].GetComponent<ReyCasterScript3D>().updateArea();
+                float area = newCameraArray[j].GetComponent<CameraSensor>().updateArea();
                 areaSum += area;
 
                 if (area > currMaxAreas[j])
@@ -150,7 +150,7 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
         Vector3 position = new Vector3(x, y, transform.position.z);
 
         camera.transform.position = position;
-        camera.GetComponent<ReyCasterScript3D>().angle = rot;
+        camera.GetComponent<CameraSensor>().angle = rot;
 
         return position;
     }
@@ -158,7 +158,7 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
     public void PositionCamera(GameObject camera, Vector3 position, float angle)
     {
         camera.transform.position = position;
-        camera.GetComponent<ReyCasterScript3D>().angle = angle;
+        camera.GetComponent<CameraSensor>().angle = angle;
     }
 
     public GameObject makeCamera()
@@ -172,7 +172,7 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
 
         for (int i = 0; i < numberOfCameras; i++)
         {
-            areaSum += newCameraArray[i].GetComponent<ReyCasterScript3D>().updateArea();
+            areaSum += newCameraArray[i].GetComponent<CameraSensor>().updateArea();
         }
 
         return areaSum;
@@ -185,7 +185,7 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
         for (int j = 0; j < numberOfCameras; j++)
         {
             PositionCamera(newCameraArray[j], positions[j], angles[j]);
-            areaSum += newCameraArray[j].GetComponent<ReyCasterScript3D>().updateArea();
+            areaSum += newCameraArray[j].GetComponent<CameraSensor>().updateArea();
         }
 
         return areaSum;
@@ -209,10 +209,10 @@ public class CameraPositionOptimizationScript3D : MonoBehaviour
         for (int j = 0; j < numberOfCameras; j++)
         {
 
-            float newAngle = newCameraArray[j].GetComponent<ReyCasterScript3D>().angle + angleDelta;
+            float newAngle = newCameraArray[j].GetComponent<CameraSensor>().angle + angleDelta;
             PositionCamera(newCameraArray[j], newCameraArray[j].transform.position, newAngle);
             // calculate area
-            float area = newCameraArray[j].GetComponent<ReyCasterScript3D>().updateArea();
+            float area = newCameraArray[j].GetComponent<CameraSensor>().updateArea();
             areaSum += area;
 
             if (area > currMaxAreas[j])

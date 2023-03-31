@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ViewCasterScript3D : MonoBehaviour
+public class ViewCasterScript3D : CameraSensor
 {
     // all angles are in degrees
-    public float angle;
     public float fieldOfView = 70;
     public int numOfRays = 10;
     public float depthOfView = 10;
-    public float area;
 
     private Vector3 lastVectorEndPoint;
     public Vector3[] endPoints;
@@ -47,21 +45,21 @@ public class ViewCasterScript3D : MonoBehaviour
     }
 
 
-    void Update()
+    public void Update()
     {
-        //area = updateArea();
+        value = updateArea();
     }
 
-    public float updateArea ()
+    public override float updateArea ()
     {
         //if (isMeshDrawn)
         //{
-        //    return area;
+        //    return value;
         //}
         directions = new Vector3[numOfRays];
         startAngle = angle - fieldOfView / 2;
         lastVectorEndPoint = new Vector2(0, 0);
-        area = 0;
+        value = 0;
 
         float currAngle;
         for (int i = 0; i < numOfRays; i++)
@@ -85,7 +83,7 @@ public class ViewCasterScript3D : MonoBehaviour
                     Vector3 v2 = transform.position - (Vector3)lastVectorEndPoint;
                     v2.z = 0;
                     Vector3 V = Vector3.Cross(v1, v2);
-                    area += V.magnitude / 2.0f;
+                    value += V.magnitude / 2.0f;
                 }
                 Debug.DrawLine(transform.position, endPoints[i]);
                 //Debug.Log("pos: (x:" + transform.position.x + ", y:" + transform.position.y + ", z:" + transform.position.z + ")");
@@ -95,7 +93,7 @@ public class ViewCasterScript3D : MonoBehaviour
                 lastVectorEndPoint = endPoints[i];
             }
         }
-        return area;
+        return value;
     }
 
     //[ContextMenu("Draw mesh")]
@@ -136,7 +134,7 @@ public class ViewCasterScript3D : MonoBehaviour
     //    mesh.Clear();
     //}
 
-    public void printAreas ()
+    public override void printAreas ()
     {
         for (int i = 1; i < endPoints.Length; i++)
         {

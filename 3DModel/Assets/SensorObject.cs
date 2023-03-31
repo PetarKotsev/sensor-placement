@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class SensorObject : MonoBehaviour
 {
-    public object value;
+    public float value;
 
-    public float[] positions;
-
-    public float[] orientations;
     public abstract void printAreas();
-    public abstract void updateArea();
+    public abstract float updateArea();
 }

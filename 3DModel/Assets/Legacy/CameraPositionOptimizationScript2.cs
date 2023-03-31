@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraPositionOptimizationScript2 : MonoBehaviour
+public class CameraPositionOptimizationScript2 : Algorithm
 {
     public GameObject cameraObject;
     public GameObject houseObject;
@@ -22,10 +22,6 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
     private int angleDelta = 10;
     private int numOfAngles = 36;
 
-    // for position step
-    public int updateCounter = 0;
-    public int numOfIterations = 90;
-
     // best results
     public float[] maxAngles;
     public Vector3[] maxPositions;
@@ -34,8 +30,15 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
 
     private int cameraCounter = 0;
 
-    void Start()
+    public override void Start()
     {
+        Debug.Assert(cameraObject == null, "Camera object not provided");
+        Debug.Assert(cameraObject.GetComponent<ViewCasterScript>() == null, "Given camera object is not of type ViewCasterScript");
+
+        // for position step
+        updateCounter = 0;
+        numOfIterations = 90;
+    
         newCameraArray = new GameObject[numberOfCameras];
         currPositions = new Vector3[numberOfCameras];
         maxPositions = new Vector3[numberOfCameras];
@@ -60,13 +63,13 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         // Optimization
         OptimizationStep();
     }
 
-    public void OptimizationStep()
+    public override void OptimizationStep()
     {
         if (updateCounter < numOfIterations)
         {
@@ -87,10 +90,10 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
             // angle optimization 
             if (angleCounter < numOfAngles)
             {
-                float newAngle = newCameraArray[cameraCounter].GetComponent<ViewCasterScript>().angle + angleDelta;
+                float newAngle = newCameraArray[cameraCounter].GetComponent<CameraSensor>().angle + angleDelta;
                 PositionCamera(newCameraArray[cameraCounter], newCameraArray[cameraCounter].transform.position, newAngle);
                 // calculate area
-                float area = newCameraArray[cameraCounter].GetComponent<ViewCasterScript>().updateArea();
+                float area = newCameraArray[cameraCounter].GetComponent<CameraSensor>().updateArea();
 
                 if (area > currMaxAreas[cameraCounter])
                 {
@@ -109,7 +112,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
                 PositionCamera(newCameraArray[cameraCounter], currPositions[cameraCounter], currMaxAngles[cameraCounter]);
 
                 // draw mesh at max angle
-                //newCameraArray[cameraCounter].GetComponent<ViewCasterScript>().drawMesh();
+                //newCameraArray[cameraCounter].GetComponent<CameraSensor>().drawMesh();
                 areaCoveredTextField.text = "Area covered: " + evalueateCameraArrayCoverage();
 
                 // draw mesh
@@ -168,7 +171,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
         Vector3 position = new Vector3(x, y, -4f);
 
         camera.transform.position = position;
-        camera.GetComponent<ViewCasterScript>().angle = rot;
+        camera.GetComponent<CameraSensor>().angle = rot;
 
         return position;
     }
@@ -185,7 +188,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
     public void PositionCamera(GameObject camera, Vector3 position, float angle)
     {
         camera.transform.position = position;
-        camera.GetComponent<ViewCasterScript>().angle = angle;
+        camera.GetComponent<CameraSensor>().angle = angle;
     }
 
     public GameObject makeCamera()
@@ -199,7 +202,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
 
         for (int i = 0; i < numberOfCameras; i++)
         {
-            areaSum += newCameraArray[i].GetComponent<ViewCasterScript>().updateArea();
+            areaSum += newCameraArray[i].GetComponent<CameraSensor>().updateArea();
         }
 
         return areaSum;
@@ -212,7 +215,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
         for (int j = 0; j < numberOfCameras; j++)
         {
             PositionCamera(newCameraArray[j], positions[j], angles[j]);
-            areaSum += newCameraArray[j].GetComponent<ViewCasterScript>().updateArea();
+            areaSum += newCameraArray[j].GetComponent<CameraSensor>().updateArea();
         }
 
         return areaSum;
@@ -225,7 +228,6 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
         {
             newCameraArray[j].GetComponent<ViewCasterScript>().drawMesh();
         }
-
     }
     public void removeMeshes ()
     {
@@ -254,10 +256,10 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
         for (int j = 0; j < numberOfCameras; j++)
         {
 
-            float newAngle = newCameraArray[j].GetComponent<ViewCasterScript>().angle + angleDelta;
+            float newAngle = newCameraArray[j].GetComponent<CameraSensor>().angle + angleDelta;
             PositionCamera(newCameraArray[j], newCameraArray[j].transform.position, newAngle);
             // calculate area
-            float area = newCameraArray[j].GetComponent<ViewCasterScript>().updateArea();
+            float area = newCameraArray[j].GetComponent<CameraSensor>().updateArea();
             areaSum += area;
 
             if (area > currMaxAreas[j])
@@ -266,7 +268,7 @@ public class CameraPositionOptimizationScript2 : MonoBehaviour
                 currMaxAngles[j] = newAngle;
             }
             Debug.Log("Camera[" + j + "] Angle: " + newAngle + " Area: " + areaSum);
-            //newCameraArray[j].GetComponentInParent<ViewCasterScript>().printAreas();
+            //newCameraArray[j].GetComponentInParent<CameraSensor>().printAreas();
         }
     }
 }
