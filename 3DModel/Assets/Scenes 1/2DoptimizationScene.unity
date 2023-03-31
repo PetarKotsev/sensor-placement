@@ -301,6 +301,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &935441896
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5967830314900232272, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_Name
+      value: CameraObj3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -40.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232276, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232277, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: numOfRays
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967830314900232277, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+      propertyPath: depthOfView
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
 --- !u!114 &1219476183 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3811652773308241733, guid: 265c364de21f8af4e8015f58b70bedf0, type: 3}
@@ -392,6 +457,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -273.29, z: 0}
+--- !u!1 &2062941024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5967830314900232272, guid: ad8484a7cb0309c4db91aa33566dfae5, type: 3}
+  m_PrefabInstance: {fileID: 935441896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2198650228388314077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -447,6 +517,14 @@ PrefabInstance:
       propertyPath: houseObject
       value: 
       objectReference: {fileID: 1327525139}
+    - target: {fileID: 2198650227315345630, guid: 3c1bbce761bcec0458a96b9b8e4e3e58, type: 3}
+      propertyPath: cameraObject
+      value: 
+      objectReference: {fileID: 2062941024}
+    - target: {fileID: 2198650227315345630, guid: 3c1bbce761bcec0458a96b9b8e4e3e58, type: 3}
+      propertyPath: numberOfCameras
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2198650227315345630, guid: 3c1bbce761bcec0458a96b9b8e4e3e58, type: 3}
       propertyPath: areaCoveredTextField
       value: 
